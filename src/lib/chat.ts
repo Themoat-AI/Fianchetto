@@ -12,5 +12,6 @@ export async function ensureChatSession() {
   if (session) return session.user.id;
   const { data, error } = await supabase.auth.signInAnonymously();
   if (error) throw new Error('Could not start a private chat session. Enable Anonymous sign-ins in Supabase Auth.');
+  if (!data.user) throw new Error('Could not start a private chat session.');
   return data.user.id;
 }
